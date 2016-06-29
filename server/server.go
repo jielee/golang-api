@@ -21,10 +21,10 @@ func NewApi() *restful.Container{
 
 	user := model.NewUserStorage("user")
 
-	controllers := []controller.Controller{controller.NewUsersController(&user)}
+	controllers := []controller.Router{controller.NewUsersController(&user)}
 
 	for _, c := range controllers{
-		c.ConfigureOn(ws)
+		c.ConfigureRoutes(ws)
 	}
 
 	wsContainer := restful.NewContainer()
