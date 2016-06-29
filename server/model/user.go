@@ -2,6 +2,8 @@ package model
 
 import (
 	"time"
+	"github.com/learning/api/server/storage"
+	"fmt"
 )
 
 type Users interface  {
@@ -16,6 +18,26 @@ type User struct {
 	Email string	`json:"email"`
 	Created time.Time`json:"time"`
 }
+
+type UserMemoryStorage struct {
+	Storage storage.MemoryStorage
+}
+
+func (s UserMemoryStorage) Create(user *User) (*User, error){
+	s.Storage.Create(fmt.Sprintf("%v", user.Email), user)
+	return user, nil
+}
+
+//how to transform interface to object s.Storage.GetOne(key).(*User)
+func (s UserMemoryStorage) Read(key string) (*User, error){
+	return s.Storage.GetOne(key).(*User), nil
+}
+
+func NewUserMemoryStorage() UserMemoryStorage{
+	return UserMemoryStorage{Storage: storage.MemoryStorage{Storage:make(map[interface{}]interface{})}}
+}
+
+
 
 type UserStorage struct {
 	prefix string

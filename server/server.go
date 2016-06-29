@@ -19,9 +19,9 @@ func NewApi() *restful.Container{
 	ws.Consumes(restful.MIME_JSON)
 	ws.Produces(restful.MIME_JSON)
 
-	user := model.NewUserStorage("user")
+	user := model.NewUserMemoryStorage()
 
-	controllers := []controller.Router{controller.NewUsersController(&user)}
+	controllers := []controller.Router{controller.NewUsersController(user)}
 
 	for _, c := range controllers{
 		c.ConfigureRoutes(ws)
