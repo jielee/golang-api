@@ -34,7 +34,7 @@ func NewUsersController(userStorage model.Users) UsersController{
 	return UsersController{Getter: getter, Poster: poster}
 }
 
-func (u UsersController) ConfigureOn(ws *restful.WebService){
+func (u UsersController) ConfigureRoutes(ws *restful.WebService){
 	ws.	Doc("Users").
 		Route(ws.POST("/users").
 		To(u.Post).
