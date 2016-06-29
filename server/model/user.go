@@ -23,13 +23,14 @@ type UserMemoryStorage struct {
 	Storage storage.MemoryStorage
 }
 
-func (s UserMemoryStorage) Create(user *User) (*User, error){
+func (s *UserMemoryStorage) Create(user *User) (*User, error){
+	user.Created = time.Now()
 	s.Storage.Create(fmt.Sprintf("%v", user.Email), user)
 	return user, nil
 }
 
 //how to transform interface to object s.Storage.GetOne(key).(*User)
-func (s UserMemoryStorage) Read(key string) (*User, error){
+func (s *UserMemoryStorage) Read(key string) (*User, error){
 	return s.Storage.GetOne(key).(*User), nil
 }
 

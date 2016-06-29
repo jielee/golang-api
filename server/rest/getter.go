@@ -11,7 +11,7 @@ type GetResource struct {
 	GetFunc func(params map[string]string) (interface{}, error)
 }
 
-func (r GetResource) Get(request *restful.Request, response *restful.Response){
+func (r *GetResource) Get(request *restful.Request, response *restful.Response){
 	resource, err := r.GetFunc(request.PathParameters())
 
 	if err == nil {

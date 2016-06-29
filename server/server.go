@@ -21,7 +21,7 @@ func NewApi() *restful.Container{
 
 	user := model.NewUserMemoryStorage()
 
-	controllers := []controller.Router{controller.NewUsersController(user)}
+	controllers := []controller.Router{controller.NewUsersController(&user)}
 
 	for _, c := range controllers{
 		c.ConfigureRoutes(ws)
