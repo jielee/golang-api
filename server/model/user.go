@@ -4,6 +4,7 @@ import (
 	"time"
 	"github.com/learning/api/server/storage"
 	"fmt"
+	"errors"
 )
 
 type Users interface  {
@@ -36,7 +37,11 @@ func (s *UserMemoryStorage) Delete(key string) bool{
 
 //how to transform interface to object s.Storage.GetOne(key).(*User)
 func (s *UserMemoryStorage) Read(key string) (*User, error){
-	return s.Storage.GetOne(key).(*User), nil
+	user := s.Storage.GetOne(key)
+	if user != nil{
+		return s.Storage.GetOne(key).(*User), nil
+	}
+	return nil, errors.New("OOOOOOOoooOOoOoOooPsss")
 }
 
 func NewUserMemoryStorage() UserMemoryStorage{
