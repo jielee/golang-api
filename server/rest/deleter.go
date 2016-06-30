@@ -8,9 +8,14 @@ type Deleter interface {
 
 type DeleteResource struct {
 	Name string
-	DeleteFunc func (id interface{}) bool
+	DeleteFunc func (map[string]string) bool
 }
 
 func (r *DeleteResource) Delete (request *restful.Request, response *restful.Response) {
+	ok := r.DeleteFunc(request.PathParameters())
+
+	if ok {
+		response.WriteEntity(ok)
+	}
 
 }

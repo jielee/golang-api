@@ -9,6 +9,7 @@ import (
 type UsersController struct {
 	rest.Getter
 	rest.Poster
+	rest.Deleter
 }
 
 func NewUsersController(userStorage model.Users) UsersController{
@@ -31,7 +32,14 @@ func NewUsersController(userStorage model.Users) UsersController{
 		},
 	}
 
-	return UsersController{Getter: getter, Poster: poster}
+	deleter := &rest.DeleteResource{
+		Name: name,
+		DeleteFunc: func(params map[string]string) bool{
+			return userStorage.Delete(params["user-id"])
+		},
+	}
+
+	return UsersController{Getter: getter, Poster: poster, Deleter: deleter}
 }
 
 func (u UsersController) ConfigureRoutes(ws *restful.WebService){
@@ -48,4 +56,9 @@ func (u UsersController) ConfigureRoutes(ws *restful.WebService){
 		Doc("Get user information").
 		Operation("ReadUser").
 		Param(ws.PathParameter("user-id", "identifier of the user").DataType("string")))
+
+	ws.	Doc("delete").
+		Route(ws.DELETE("/users/{user-id}").
+		To(u.Delete).Doc("Delete user information").
+		Operation("Delete User").Param(ws.PathParameter("user-id", "user id").DataType("string")))
 }

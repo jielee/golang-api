@@ -9,6 +9,7 @@ import (
 type Users interface  {
 	Create(u *User) (*User, error)
 	Read(email string) (*User, error)
+	Delete(email string) bool
 }
 
 type User struct {
@@ -27,6 +28,10 @@ func (s *UserMemoryStorage) Create(user *User) (*User, error){
 	user.Created = time.Now()
 	s.Storage.Create(fmt.Sprintf("%v", user.Email), user)
 	return user, nil
+}
+
+func (s *UserMemoryStorage) Delete(key string) bool{
+	return s.Storage.Delete(key)
 }
 
 //how to transform interface to object s.Storage.GetOne(key).(*User)
