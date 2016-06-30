@@ -19,5 +19,4 @@ func (r *GetResource) Get(request *restful.Request, response *restful.Response){
 	} else {
 		response.WriteEntity(err)
 	}
-
 }

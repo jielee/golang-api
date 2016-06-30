@@ -2,7 +2,7 @@ package storage
 
 type StoreEr interface {
 	GetOne(key interface{}) interface{}
-	Create(key interface{}, res interface{}) interface{}
+	Create(key interface{}, res interface{}) *interface{}
 }
 
 type MemoryStorage struct {
@@ -13,7 +13,7 @@ func (s *MemoryStorage) GetOne(key interface{}) interface{}{
 	return s.Storage[key]
 }
 
-func (s *MemoryStorage) Create(key interface{}, res interface{}) interface{}{
+func (s *MemoryStorage) Create(key interface{}, res interface{}) *interface{}{
 	s.Storage[key] = res
-	return res
+	return &res
 }

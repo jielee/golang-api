@@ -31,6 +31,4 @@ func (p *PostResource) Post(request *restful.Request, response *restful.Response
 	}
 
 	response.WriteEntity(resource)
-
-
 }
